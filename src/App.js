@@ -1,25 +1,64 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './MyComponents/Header';
+import { Todos } from './MyComponents/Todos';
+import { Footer } from './MyComponents/Footer';
+import React, { Component } from 'react'
+import AddTodo from './MyComponents/AddTodo';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      todos: [
+        
+      ],
+      onDelete: (todo) => {
+        console.log('i am delete method', todo);
+        this.setState({
+          todos: this.state.todos.filter((e) => {
+            return e !== todo;
+          })
+        })
+
+      }
+
+    }
+  }
+
+  addTodo = (title, desc) => {
+    console.log('i am adding this function', title, desc);
+    let sno;
+    if (this.state.todos.length == 0)
+      sno = 1;
+    else
+      sno = this.state.todos[this.state.todos.length - 1].sno + 1;
+
+    const myTodo =
+    {
+      sno: sno,
+      title: title,
+      desc: desc
+    }
+    this.setState({ todos: [...this.state.todos, myTodo] });
+    console.log(myTodo);
+
+
+  }
+
+
+  render() {
+
+    return (
+      <>
+        <Header title='MY TODO LIST' searchBar={false} />
+        <AddTodo addTodo={this.addTodo} />
+        <Todos todos={this.state.todos} onDelete={this.state.onDelete} />
+        <Footer />
+      </>
+    )
+  }
 }
 
 export default App;
