@@ -12,7 +12,14 @@ export default function AddTodo({addTodo}) {
         if (!title || !desc)
             alert("title or description can be blank");
             else
+            {
             addTodo(title,desc);
+            setTimeout(() => {
+                setTitle("");
+                setDesc("");
+                
+            }, 500);
+        }
     }
 
 
@@ -20,7 +27,7 @@ export default function AddTodo({addTodo}) {
         <div className='container '>
             <h2>Add to Todo</h2>
             <div className='row'>
-                <div className='col-6'>
+                <div className='col-lg-6 col-sm-12 col-md-12'>
                     <form onSubmit={submit}>
                         <div className="form-group">
                             <label >Todo Title</label>
